@@ -12,6 +12,7 @@ Simulator::Simulator()
 	_oven_temp=0;
 	_air_temp=0;
 	_h=MAX_LENGTH/2;
+	_filename="sim";
 }
 
 Simulator::~Simulator()
@@ -32,6 +33,7 @@ void Simulator::process()
 	initializeTemper();
 	while (!canTerminate())
 	{
+		if (_time%200==0) writeDownAns();
 		for (int i=1;i<=MAX_LENGTH;i++)
 			for (int j=1;j<=MAX_LENGTH;j++)
 				for (int k=1;k<=_h;k++)
@@ -39,7 +41,7 @@ void Simulator::process()
 					t[i][j][k]=nextTemperture(i,j,k);
 				}
 		memcpy(t_copy,t,sizeof(t));
-		writeDownAns();
+		
 		_time++;
 		cout<<"time "<<_time<<" simulated finished"<<endl;
 	}
@@ -51,14 +53,9 @@ void Simulator::initializeTemper()
 		for (int j=0;j<=MAX_LENGTH+1;j++)
 			for (int k=0;k<=MAX_LENGTH+1;k++)
 			{
-				if (map[i][j]==1) t[i][j][k]=_air_temp;
-				if (map[i][j]==2) t[i][j][k]=_oven_temp;
-				if (map[i][j]==3)
-				{
-					if (k==0) t[i][j][k]=_oven_temp;
-					else if (k<=_h) t[i][j][k]=_food_temp;
-					else t[i][j][k]=_air_temp;
-				}
+				if (map[i][j][k]==1) t[i][j][k]=_air_temp;
+				if (map[i][j][k]==2) t[i][j][k]=_oven_temp;
+				if (map[i][j][k]==3) t[i][j][k]=_food_temp;
 			}
 }
 
@@ -70,12 +67,12 @@ void Simulator::setOutputFile(string filename)
 void Simulator::writeDownAns()
 {
 	char file[50];
-	sprintf(file,"%s\\%d.dat",_filename.c_str(),_time);
-	outfile.open(file);
+	sprintf(file,"%d.ans",_time);
+	ofstream outfile(file);
 	for (int i=0;i<MAX_LENGTH;i++)
 	{
 		for (int j=0;j<MAX_LENGTH;j++)
-			outfile<<t[i][j][1]<<"\t";
+			outfile<<t[i][j][4]<<"\t";
 		outfile<<endl;
 	}
 	outfile.close();

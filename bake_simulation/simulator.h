@@ -18,9 +18,9 @@ protected:
 	int _time;
 	int _h;
 	string _filename;
-	ofstream outfile;
+//	ofstream outfile;
 
-	int map[MAX_LENGTH+10][MAX_LENGTH+10];
+	int map[MAX_LENGTH+10][MAX_LENGTH+10][MAX_LENGTH/2+10];
 	/*
 	1:this is the air
 	2:this is the pan part
@@ -36,7 +36,7 @@ public:
 	Simulator();
 	~Simulator();
 	void setTemperature(int food_temp,int oven_temp,int air_temp);
-	void setOutputFile(string filename=string("output"));
+	void setOutputFile(string filename);
 	void process();
 
 protected:
