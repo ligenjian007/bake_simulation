@@ -166,6 +166,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\RecCircle.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\rectangle.cpp"
 				>
 			</File>

@@ -7,11 +7,10 @@
 class RectangleSimulator:public Simulator
 {
 public:
-	RectangleSimulator(int x=50,int y=50);
+	RectangleSimulator(int x=MAX_LENGTH,int y=MAX_LENGTH);
 	~RectangleSimulator();
 protected:
 	virtual void initializeMap();
-	virtual double nextTemperture(int x,int y,int z);
 	virtual bool canTerminate();
 	virtual void writeDownAns();
 

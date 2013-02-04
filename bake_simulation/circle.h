@@ -11,7 +11,6 @@ public:
 	~CircleSimulator();
 protected:
 	virtual void initializeMap();
-	virtual double nextTemperture(int x,int y,int z);
 	virtual bool canTerminate();
 	virtual void writeDownAns();
 
