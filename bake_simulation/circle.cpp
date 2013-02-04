@@ -19,7 +19,7 @@ void CircleSimulator::initializeMap()
 	{
 		for (int j=0;j<MAX_LENGTH;j++)
 		{
-			map[i][j][0]=_oven_temp;
+			map[i][j][0]=3;
 		}
 	}
 
@@ -36,7 +36,7 @@ void CircleSimulator::initializeMap()
 		}
 	}
 
-		for (int i=0;i<MAX_LENGTH+10;i++)
+	for (int i=0;i<MAX_LENGTH+10;i++)
 	{
 		for (int j=0;j<MAX_LENGTH+10;j++)
 		{
@@ -50,14 +50,56 @@ void CircleSimulator::initializeMap()
 
 bool CircleSimulator::canTerminate()
 {
-	if (_time>2000) return true;
+	if (_time>2000000) return true;
 	else return false;
 }
 
 double CircleSimulator::nextTemperture(int x,int y,int z)
 {
 	double temperature;
+	double dx1,dx2,ddx,dy1,dy2,ddy,dz1,dz2,ddz,flashtemp;
+
 	if (map[x][y][z]==1 || map[x][y][z]==2) return t[x][y][z];
-	temperature=(t[x-1][y][z]+t[x][y-1][z]+t[x][y][z-1]+t[x+1][y][z]+t[x][y+1][z]+t[x][y][z+1])/6;
+
+	dx1=(t[x][y][z]-t[x-1][y][z])/(1*scale);
+	dx2=(t[x+1][y][z]-t[x][y][z])/(1*scale);
+	ddx=(dx2-dx1)/(1*scale);
+
+	dy1=(t[x][y][z]-t[x][y-1][z])/(1*scale);
+	dy2=(t[x][y+1][z]-t[x][y][z])/(1*scale);
+	ddy=(dy2-dy1)/(1*scale);
+
+	dz1=(t[x][y][z]-t[x][y][z-1])/(1*scale);
+	dz2=(t[x][y][z+1]-t[x][y][z])/(1*scale);
+	ddz=(dz2-dz1)/(1*scale);
+
+	flashtemp=(ddx+ddy+ddz)*K/(P*Cp);
+
+	temperature=t[x][y][z]+flashtemp;
 	return(temperature);
+}
+
+void CircleSimulator::writeDownAns()
+{
+	char file[50];
+
+	sprintf(file,"buttom%d.ans",_time);
+	ofstream outfile(file);
+	for (int i=0;i<=MAX_LENGTH;i++)
+	{
+		for (int j=0;j<=MAX_LENGTH;j++)
+			outfile<<t[i][j][1]<<"\t";
+		outfile<<endl;
+	}
+	outfile.close();
+
+	sprintf(file,"center%d.ans",_time);
+	outfile.open(file);
+	for (int i=0;i<=MAX_LENGTH;i++)
+	{
+		for (int j=0;j<=MAX_LENGTH;j++)
+			outfile<<t[i][j][_h/2]<<"\t";
+		outfile<<endl;
+	}
+	outfile.close();
 }

@@ -192,6 +192,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\RecCircle.h"
+				>
+			</File>
+			<File
 				RelativePath=".\rectangle.h"
 				>
 			</File>

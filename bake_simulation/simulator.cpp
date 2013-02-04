@@ -20,7 +20,7 @@ Simulator::~Simulator()
 }
 
 
-void Simulator::setTemperature(int food_temp,int oven_temp,int air_temp)
+void Simulator::setTemperature(double food_temp,double oven_temp,double air_temp)
 {
 	_food_temp=food_temp;
 	_oven_temp=oven_temp;
@@ -33,7 +33,8 @@ void Simulator::process()
 	initializeTemper();
 	while (!canTerminate())
 	{
-		if (_time%200==0) writeDownAns();
+		if (_time%2000==0)
+			writeDownAns();
 		for (int i=1;i<=MAX_LENGTH;i++)
 			for (int j=1;j<=MAX_LENGTH;j++)
 				for (int k=1;k<=_h;k++)
@@ -41,9 +42,9 @@ void Simulator::process()
 					t[i][j][k]=nextTemperture(i,j,k);
 				}
 		memcpy(t_copy,t,sizeof(t));
-		
 		_time++;
-		cout<<"time "<<_time<<" simulated finished"<<endl;
+		if (_time%200==0)
+			cout<<"time "<<_time<<" simulated, center temperature: "<<t[MAX_LENGTH/2][MAX_LENGTH/2][MAX_LENGTH/4]<<endl;
 	}
 }
 
@@ -64,16 +65,3 @@ void Simulator::setOutputFile(string filename)
 	_filename=filename;
 }
 
-void Simulator::writeDownAns()
-{
-	char file[50];
-	sprintf(file,"%d.ans",_time);
-	ofstream outfile(file);
-	for (int i=0;i<MAX_LENGTH;i++)
-	{
-		for (int j=0;j<MAX_LENGTH;j++)
-			outfile<<t[i][j][4]<<"\t";
-		outfile<<endl;
-	}
-	outfile.close();
-}

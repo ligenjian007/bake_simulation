@@ -7,14 +7,14 @@
 
 using namespace std;
 
-const int MAX_LENGTH=200;
+const int MAX_LENGTH=50;
 
 class Simulator
 {
 protected:
-	int _food_temp;
-	int _oven_temp;
-	int _air_temp;
+	double _food_temp;
+	double _oven_temp;
+	double _air_temp;
 	int _time;
 	int _h;
 	string _filename;
@@ -30,12 +30,12 @@ protected:
 	double t[MAX_LENGTH+10][MAX_LENGTH+10][MAX_LENGTH/2+10],t_copy[MAX_LENGTH+10][MAX_LENGTH+10][MAX_LENGTH/2+10];
 
 	void initializeTemper();
-	void writeDownAns();
+//	void writeDownAns();
 
 public:
 	Simulator();
 	~Simulator();
-	void setTemperature(int food_temp,int oven_temp,int air_temp);
+	void setTemperature(double food_temp,double oven_temp,double air_temp);
 	void setOutputFile(string filename);
 	void process();
 
@@ -43,6 +43,7 @@ protected:
 	virtual void initializeMap(){};
 	virtual double nextTemperture(int x,int y,int z){return 0;};
 	virtual bool canTerminate(){return false;};
+	virtual void writeDownAns(){};
 };
 
 #endif
