@@ -41,6 +41,12 @@ public:
 	void setTemperature(double food_temp,double oven_temp,double air_temp);
 	void setOutputFile(string filename);
 	void process();
+	double varOfButtom();
+	double varFOfButtom();
+	double varOfTotal();
+	double varFOfTotal();
+	virtual double area(){return 0;};
+	int time();
 
 protected:
 	virtual void initializeMap(){};

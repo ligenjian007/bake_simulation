@@ -2,7 +2,7 @@
 #include "numeric.h"
 #include <math.h>
 
-#define PRINT_MAP
+//#define PRINT_MAP
 
 RecCircleSimulator::RecCircleSimulator(int r,int a,int b)
 {
@@ -130,7 +130,7 @@ void RecCircleSimulator::writeDownAns()
 {
 	char file[50];
 
-	sprintf(file,"buttom%d.ans",_time);
+	sprintf(file,"buttom,t=%d,x=%d,y=%d,r=%d.rcc",_time,_a,_b,_r);
 	ofstream outfile(file);
 	for (int i=0;i<=MAX_LENGTH;i++)
 	{
@@ -140,7 +140,7 @@ void RecCircleSimulator::writeDownAns()
 	}
 	outfile.close();
 
-	sprintf(file,"center%d.ans",_time);
+	sprintf(file,"center,t=%d,x=%d,y=%d,r=%d.rcc",_time,_a,_b,_r);
 	outfile.open(file);
 	for (int i=0;i<=MAX_LENGTH;i++)
 	{
@@ -153,10 +153,15 @@ void RecCircleSimulator::writeDownAns()
 
 bool RecCircleSimulator::canTerminate()
 {
-	if (abs(_prev_temp-t[_a/2][_b/2][_h/2])<5e-5 && _time>20000 || t[_a/2][_b/2][_h/2]>98) return true;
+	if (t[_a/2][_b/2][_h/2]>98) return true;
 	else 
 	{
 		_prev_temp=t[_a/2][_b/2][_h/2];
 		return false;
 	}
+}
+
+double RecCircleSimulator::area()
+{
+	return(_a*_b-_r*_r*(4-3.14159));
 }

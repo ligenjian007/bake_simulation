@@ -48,7 +48,7 @@ void RectangleSimulator::initializeMap()
 
 bool RectangleSimulator::canTerminate()
 {
-	if (abs(_prev_temp-t[_x/2][_y/2][_h/2])<5e-5 && _time>20000 || t[_x/2][_y/2][_h/2]>98) return true;
+	if (t[_x/2][_y/2][_h/2]>98) return true;
 	else 
 	{
 		_prev_temp=t[_x/2][_y/2][_h/2];
@@ -71,7 +71,7 @@ void RectangleSimulator::writeDownAns()
 {
 	char file[50];
 
-	sprintf(file,"buttom%d.ans",_time);
+	sprintf(file,"buttom,t=%d,x=%d,y=%d.rec",_time,_x,_y);
 	ofstream outfile(file);
 	for (int i=0;i<=MAX_LENGTH;i++)
 	{
@@ -81,7 +81,7 @@ void RectangleSimulator::writeDownAns()
 	}
 	outfile.close();
 
-	sprintf(file,"edge-left%d.ans",_time);
+	sprintf(file,"edge-left,t=%d,x=%d,y=%d.rec",_time,_x,_y);
 	ofstream outfile1(file);
 	for (int j=0;j<=_y;j++)
 	{
@@ -92,7 +92,7 @@ void RectangleSimulator::writeDownAns()
 	outfile1.close();
 
 
-	sprintf(file,"edge-front%d.ans",_time);
+	sprintf(file,"edge-front,t=%d,x=%d,y=%d.rec",_time,_x,_y);
 	ofstream outfile3(file);
 	for (int i=0;i<=_x;i++)
 	{
@@ -103,7 +103,7 @@ void RectangleSimulator::writeDownAns()
 	outfile3.close();
 
 
-	sprintf(file,"center%d.ans",_time);
+	sprintf(file,"center,t=%d,x=%d,y=%d.rec",_time,_x,_y);
 	ofstream outfile4(file);
 	for (int i=0;i<=_x;i++)
 	{
@@ -112,4 +112,9 @@ void RectangleSimulator::writeDownAns()
 		outfile4<<endl;
 	}
 	outfile4.close();
+}
+
+double RectangleSimulator::area()
+{
+	return _x*_y;
 }

@@ -19,7 +19,7 @@ void CircleSimulator::initializeMap()
 	{
 		for (int j=0;j<MAX_LENGTH;j++)
 		{
-			map[i][j][0]=3;
+			map[i][j][0]=2;
 		}
 	}
 
@@ -50,7 +50,7 @@ void CircleSimulator::initializeMap()
 
 bool CircleSimulator::canTerminate()
 {
-	if (abs(_prev_temp-t[_x][_y][_h/2])<5e-5 && _time>20000 || t[_x][_y][_h/2]>98) return true;
+	if (t[_x][_y][_h/2]>98) return true;
 	else
 	{
 		_prev_temp=t[_x][_y][_h/2];
@@ -62,7 +62,7 @@ void CircleSimulator::writeDownAns()
 {
 	char file[50];
 
-	sprintf(file,"buttom%d.ans",_time);
+	sprintf(file,"buttom,t=%d,r=%d.cir",_time,_r);
 	ofstream outfile(file);
 	for (int i=0;i<=MAX_LENGTH;i++)
 	{
@@ -72,7 +72,7 @@ void CircleSimulator::writeDownAns()
 	}
 	outfile.close();
 
-	sprintf(file,"center%d.ans",_time);
+	sprintf(file,"center,t=%d,r=%d.cir",_time,_r);
 	outfile.open(file);
 	for (int i=0;i<=MAX_LENGTH;i++)
 	{
@@ -81,4 +81,9 @@ void CircleSimulator::writeDownAns()
 		outfile<<endl;
 	}
 	outfile.close();
+}
+
+double CircleSimulator::area()
+{
+	return _r*_r*3.1415926;
 }

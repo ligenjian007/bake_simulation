@@ -9,6 +9,7 @@ class CircleSimulator:public Simulator
 public:
 	CircleSimulator(int r=MAX_LENGTH/2-3);
 	~CircleSimulator();
+	virtual double area();
 protected:
 	virtual void initializeMap();
 	virtual bool canTerminate();

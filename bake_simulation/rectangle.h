@@ -9,6 +9,7 @@ class RectangleSimulator:public Simulator
 public:
 	RectangleSimulator(int x=MAX_LENGTH,int y=MAX_LENGTH);
 	~RectangleSimulator();
+	virtual double area();
 protected:
 	virtual void initializeMap();
 	virtual bool canTerminate();

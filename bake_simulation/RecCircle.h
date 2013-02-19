@@ -18,6 +18,7 @@ protected:
 public:
 	RecCircleSimulator(int r=MAX_LENGTH/10+2,int a=MAX_LENGTH-20,int b=MAX_LENGTH);
 	~RecCircleSimulator();
+	virtual double area();
 };
 
 #endif 
